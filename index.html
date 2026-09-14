@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>🌦️ Live Weather Dashboard</h1>
+        <p class="subtitle">Get real-time weather for any city worldwide</p>
+
+        <form method="POST">
+            <div class="search-box">
+                <input type="text" name="city" 
+                       placeholder="Enter city name... (e.g. Bengaluru)"
+                       required>
+                <button type="submit">Get Weather</button>
+            </div>
+        </form>
+
+        {% if error %}
+        <div class="error">
+            ❌ {{ error }}
+        </div>
+        {% endif %}
+
+        {% if weather %}
+        <div class="weather-card">
+            <div class="city-name">
+                {{ weather.city }}, {{ weather.country }}
+            </div>
+
+            <div class="weather-icon">
+                <img src="http://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" 
+                     alt="weather icon">
+            </div>
+
+            <div class="description">{{ weather.description }}</div>
+
+            <div class="temp">{{ weather.temp }}°C</div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🌡️</div>
+                    <div class="stat-value">{{ weather.feels_like }}°C</div>
+                    <div class="stat-label">Feels Like</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💧</div>
+                    <div class="stat-value">{{ weather.humidity }}%</div>
+                    <div class="stat-label">Humidity</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💨</div>
+                    <div class="stat-value">{{ weather.wind }} m/s</div>
+                    <div class="stat-label">Wind Speed</div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
